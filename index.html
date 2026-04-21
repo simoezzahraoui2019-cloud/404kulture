@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>404 KULTURE — We Don't Follow Culture. We Make It.</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --black: #080808;
+    --white: #f0ede6;
+    --red: #ff2020;
+    --gold: #c9a84c;
+    --grey: #1a1a1a;
+    --mid: #2e2e2e;
+    --muted: #888;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--red);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-follower {
+    width: 36px; height: 36px;
+    border: 1px solid var(--white);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.15s ease;
+    mix-blend-mode: difference;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9000;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    mix-blend-mode: normal;
+    background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 4px;
+    color: var(--white);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-logo span { color: var(--red); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--red);
+    color: var(--white) !important;
+    padding: 10px 22px;
+    font-family: 'Space Mono', monospace !important;
+    font-size: 10px !important;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: #cc0000 !important; color: var(--white) !important; }
+
+  /* HERO */
+  .hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 48px 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #080808 0%, #1a0a0a 40%, #080808 100%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,32,32,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,32,32,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    animation: gridMove 20s linear infinite;
+  }
+
+  @keyframes gridMove {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(80px); }
+  }
+
+  .hero-number {
+    position: absolute;
+    top: 50%;
+    right: -40px;
+    transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(200px, 30vw, 400px);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -10px;
+  }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 12vw, 160px);
+    line-height: 0.9;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+
+  .hero-title em {
+    font-style: normal;
+    color: var(--red);
+    display: block;
+  }
+
+  .hero-sub {
+    margin-top: 32px;
+    max-width: 480px;
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s forwards;
+  }
+
+  .hero-actions {
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.9s forwards;
+  }
+
+  .btn-primary {
+    background: var(--red);
+    color: var(--white);
+    padding: 16px 36px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: none;
+    transition: transform 0.2s, background 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #cc0000; transform: translateY(-2px); }
+
+  .btn-ghost {
+    color: var(--white);
+    padding: 16px 36px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: border-color 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--white); transform: translateY(-2px); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    right: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.2s forwards;
+  }
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: var(--muted);
+    animation: scrollPulse 2s ease infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { width: 40px; opacity: 0.5; }
+    50% { width: 60px; opacity: 1; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* MARQUEE */
+  .marquee-strip {
+    background: var(--red);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-flex;
+    animation: marquee 18s linear infinite;
+  }
+  .marquee-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: var(--white);
+    padding: 0 40px;
+  }
+  .marquee-item span { color: rgba(255,255,255,0.4); margin-right: 40px; }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTIONS */
+  section { padding: 120px 48px; }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::before {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: var(--red);
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -1px;
+  }
+
+  /* ABOUT */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-visual {
+    position: relative;
+    height: 500px;
+  }
+
+  .about-card {
+    position: absolute;
+    background: var(--grey);
+    border: 1px solid var(--mid);
+  }
+  .about-card-main {
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .about-card-main-inner {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 120px;
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(255,32,32,0.3);
+    line-height: 1;
+    letter-spacing: -5px;
+  }
+  .about-badge {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 120px;
+    height: 120px;
+    background: var(--red);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+  .about-badge-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    line-height: 1;
+    color: var(--white);
+  }
+  .about-badge-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .about-content .section-title { margin-bottom: 32px; }
+
+  .about-text {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+    padding-top: 48px;
+    border-top: 1px solid var(--mid);
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--white);
+    line-height: 1;
+  }
+  .stat-num span { color: var(--red); }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* SERVICES */
+  .services-section { background: var(--grey); }
+
+  .services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 72px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .service-card {
+    background: var(--black);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    border-top: 2px solid transparent;
+  }
+  .service-card:hover {
+    background: #0f0f0f;
+    border-top-color: var(--red);
+  }
+  .service-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--red);
+    transition: width 0.4s ease;
+  }
+  .service-card:hover::after { width: 100%; }
+
+  .service-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--mid);
+    line-height: 1;
+    margin-bottom: 24px;
+    transition: -webkit-text-stroke-color 0.3s;
+  }
+  .service-card:hover .service-num { -webkit-text-stroke-color: rgba(255,32,32,0.3); }
+
+  .service-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+
+  .service-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .service-arrow {
+    position: absolute;
+    bottom: 32px;
+    right: 32px;
+    font-size: 20px;
+    color: var(--mid);
+    transition: color 0.2s, transform 0.2s;
+  }
+  .service-card:hover .service-arrow { color: var(--red); transform: translate(4px, -4px); }
+
+  /* PORTFOLIO */
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    gap: 16px;
+    margin-top: 72px;
+  }
+
+  .project-card {
+    background: var(--grey);
+    overflow: hidden;
+    position: relative;
+    cursor: none;
+  }
+
+  .project-card:nth-child(1) { grid-column: span 7; grid-row: span 2; height: 500px; }
+  .project-card:nth-child(2) { grid-column: span 5; height: 240px; }
+  .project-card:nth-child(3) { grid-column: span 5; height: 240px; }
+  .project-card:nth-child(4) { grid-column: span 4; height: 260px; }
+  .project-card:nth-child(5) { grid-column: span 8; height: 260px; }
+
+  .project-bg {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(60px, 8vw, 120px);
+    color: transparent;
+    transition: transform 0.6s ease;
+  }
+
+  .project-card:nth-child(1) .project-bg { -webkit-text-stroke: 1px rgba(255,32,32,0.15); background: linear-gradient(135deg, #150505, #0a0a0a); }
+  .project-card:nth-child(2) .project-bg { -webkit-text-stroke: 1px rgba(201,168,76,0.15); background: linear-gradient(135deg, #100d05, #0a0a0a); }
+  .project-card:nth-child(3) .project-bg { -webkit-text-stroke: 1px rgba(255,255,255,0.08); background: linear-gradient(135deg, #0a0a12, #080808); }
+  .project-card:nth-child(4) .project-bg { -webkit-text-stroke: 1px rgba(255,32,32,0.12); background: linear-gradient(135deg, #100808, #0a0a0a); }
+  .project-card:nth-child(5) .project-bg { -webkit-text-stroke: 1px rgba(201,168,76,0.1); background: linear-gradient(135deg, #0a0808, #0d0d05); }
+
+  .project-card:hover .project-bg { transform: scale(1.05); }
+
+  .project-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(8,8,8,0.95) 0%, transparent 60%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 32px;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+  }
+  .project-card:hover .project-overlay { transform: translateY(0); }
+
+  .project-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .project-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: var(--white);
+  }
+
+  .project-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials-section { background: var(--black); }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 72px;
+  }
+
+  .testimonial-card {
+    background: var(--grey);
+    padding: 40px;
+    border-left: 2px solid var(--mid);
+    transition: border-left-color 0.3s;
+    position: relative;
+  }
+  .testimonial-card:hover { border-left-color: var(--red); }
+
+  .testimonial-quote {
+    font-size: 48px;
+    color: var(--red);
+    font-family: 'Bebas Neue', sans-serif;
+    line-height: 0.7;
+    margin-bottom: 20px;
+    opacity: 0.5;
+  }
+
+  .testimonial-text {
+    font-size: 14px;
+    color: var(--white);
+    line-height: 1.8;
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .author-avatar {
+    width: 42px;
+    height: 42px;
+    background: var(--mid);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    color: var(--red);
+    flex-shrink: 0;
+  }
+
+  .author-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .author-role {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    background: var(--red);
+    padding: 100px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: 'KULTURE';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(100px, 18vw, 240px);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.1);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .cta-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 9vw, 120px);
+    line-height: 0.9;
+    color: var(--white);
+    position: relative;
+    margin-bottom: 40px;
+  }
+
+  .cta-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 48px;
+    position: relative;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btn-white {
+    background: var(--white);
+    color: var(--red);
+    padding: 18px 48px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-block;
+    position: relative;
+    font-weight: 700;
+  }
+  .btn-white:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    padding: 80px 48px 40px;
+    border-top: 1px solid var(--mid);
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid var(--mid);
+    margin-bottom: 40px;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 4px;
+    margin-bottom: 16px;
+  }
+  .footer-logo span { color: var(--red); }
+
+  .footer-tagline {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 260px;
+  }
+
+  .footer-col-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--white);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 12px; }
+  .footer-links a {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copy {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 20px;
+  }
+
+  .social-link {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .social-link:hover { color: var(--red); }
+
+  /* WHATSAPP FLOAT */
+  .wa-float {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 54px;
+    height: 54px;
+    background: #25d366;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    cursor: none;
+  }
+  .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .hero { padding: 0 24px 80px; }
+    .about { grid-template-columns: 1fr; gap: 48px; }
+    .about-visual { height: 300px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .project-card { grid-column: span 1 !important; height: 240px !important; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .services-header { flex-direction: column; align-items: flex-start; gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="follower"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo"><span>404</span> KULTURE</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact" class="nav-cta">Let's Work</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-number">404</div>
+
+  <p class="hero-tag">📍 Morocco · Est. 2020 · Media Entertainment</p>
+  <h1 class="hero-title">
+    We Don't<br>Follow<br><em>Culture.</em>
+  </h1>
+  <p class="hero-sub">We make it. 404 Kulture is a media entertainment powerhouse building the next wave of creative culture — from content to events, artists to brands.</p>
+  <div class="hero-actions">
+    <a href="#work" class="btn-primary">See Our Work</a>
+    <a href="#contact" class="btn-ghost">Work With Us</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span class="marquee-item">Content Production <span>✦</span></span>
+    <span class="marquee-item">Artist Management <span>✦</span></span>
+    <span class="marquee-item">Brand Partnerships <span>✦</span></span>
+    <span class="marquee-item">Events & Live <span>✦</span></span>
+    <span class="marquee-item">Digital Strategy <span>✦</span></span>
+    <span class="marquee-item">Media Entertainment <span>✦</span></span>
+    <span class="marquee-item">Content Production <span>✦</span></span>
+    <span class="marquee-item">Artist Management <span>✦</span></span>
+    <span class="marquee-item">Brand Partnerships <span>✦</span></span>
+    <span class="marquee-item">Events & Live <span>✦</span></span>
+    <span class="marquee-item">Digital Strategy <span>✦</span></span>
+    <span class="marquee-item">Media Entertainment <span>✦</span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" style="padding: 120px 48px;">
+  <div class="about reveal">
+    <div class="about-visual">
+      <div class="about-card about-card-main">
+        <div class="about-card-main-inner">404</div>
+      </div>
+      <div class="about-badge">
+        <div class="about-badge-num">50+</div>
+        <div class="about-badge-text">Projects<br>Delivered</div>
+      </div>
+    </div>
+    <div class="about-content">
+      <div class="section-label">Who We Are</div>
+      <h2 class="section-title">Born From<br>The Culture</h2>
+      <p class="about-text">404 Kulture is not an agency. We're a movement. Built at the intersection of street culture, digital media, and entertainment — we create content that hits different, campaigns that convert, and experiences that people remember.</p>
+      <p class="about-text">From Morocco to the world, we connect brands with culture and artists with audiences.</p>
+      <div class="about-stats">
+        <div>
+          <div class="stat-num">50<span>+</span></div>
+          <div class="stat-label">Projects Done</div>
+        </div>
+        <div>
+          <div class="stat-num">30<span>+</span></div>
+          <div class="stat-label">Brand Partners</div>
+        </div>
+        <div>
+          <div class="stat-num">5<span>M+</span></div>
+          <div class="stat-label">Total Reach</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="services-section reveal">
+  <div class="services-header">
+    <div>
+      <div class="section-label">What We Do</div>
+      <h2 class="section-title">Our<br>Services</h2>
+    </div>
+    <a href="#contact" class="btn-ghost">Start a Project →</a>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-icon">🎬</div>
+      <div class="service-name">Content Production</div>
+      <p class="service-desc">Reels, short films, branded content — we craft visuals that stop the scroll and tell stories that resonate.</p>
+      <div class="service-arrow">↗</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-icon">🎤</div>
+      <div class="service-name">Artist Management</div>
+      <p class="service-desc">We develop, manage and position talent for long-term cultural and commercial impact.</p>
+      <div class="service-arrow">↗</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-icon">🤝</div>
+      <div class="service-name">Brand Partnerships</div>
+      <p class="service-desc">Strategic collaborations that connect brands authentically to culture and community.</p>
+      <div class="service-arrow">↗</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-icon">🎪</div>
+      <div class="service-name">Events & Live</div>
+      <p class="service-desc">From intimate showcases to large-scale productions — we build experiences that create lasting memories.</p>
+      <div class="service-arrow">↗</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <div class="service-icon">📱</div>
+      <div class="service-name">Social Media Strategy</div>
+      <p class="service-desc">Data-driven growth strategies paired with culture-forward creative to build real communities.</p>
+      <div class="service-arrow">↗</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <div class="service-icon">🌍</div>
+      <div class="service-name">Distribution & PR</div>
+      <p class="service-desc">Get seen. Get heard. We amplify your story across the channels that matter.</p>
+      <div class="service-arrow">↗</div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="work" style="padding: 120px 48px;">
+  <div class="section-label reveal">Selected Work</div>
+  <h2 class="section-title reveal">The Work<br>Speaks.</h2>
+  <div class="portfolio-grid reveal">
+    <div class="project-card">
+      <div class="project-bg">KULTURE</div>
+      <div class="project-overlay">
+        <div class="project-tag">Content · Campaign</div>
+        <div class="project-title">Street Vision Vol. 1</div>
+        <div class="project-year">2025 · 2.4M Views</div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-bg">LIVE</div>
+      <div class="project-overlay">
+        <div class="project-tag">Events · Live</div>
+        <div class="project-title">404 Nights Casablanca</div>
+        <div class="project-year">2025 · Sold Out</div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-bg">BRAND</div>
+      <div class="project-overlay">
+        <div class="project-tag">Brand · Partnership</div>
+        <div class="project-title">Nike x 404 Collab</div>
+        <div class="project-year">2024 · 800K Reach</div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-bg">ARTIST</div>
+      <div class="project-overlay">
+        <div class="project-tag">Artist · Management</div>
+        <div class="project-title">Artist Launchpad 2024</div>
+        <div class="project-year">2024 · 5 Artists</div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-bg">DIGITAL</div>
+      <div class="project-overlay">
+        <div class="project-tag">Digital · Social</div>
+        <div class="project-title">Ramadan Series 2025</div>
+        <div class="project-year">2025 · 3.1M Views</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section reveal">
+  <div class="section-label">What They Say</div>
+  <h2 class="section-title">Co-Signs<br>& Proof.</h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">404 Kulture doesn't just execute briefs — they elevate them. The campaign they built for us felt genuinely rooted in culture. Results were insane.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">A</div>
+        <div>
+          <div class="author-name">Amine B.</div>
+          <div class="author-role">Brand Manager · Sportswear Brand</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">The event they produced was beyond expectations. Every detail was on point. The crowd energy was unmatched. We'll be back for sure.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">S</div>
+        <div>
+          <div class="author-name">Sara M.</div>
+          <div class="author-role">Founder · Creative Studio</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">They understood our vision from day one. The content they produced had our audience talking for weeks. Real cultural impact.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">Y</div>
+        <div>
+          <div class="author-name">Yassine K.</div>
+          <div class="author-role">Artist · Music Producer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="cta-section reveal">
+  <p class="cta-label">Ready to make culture?</p>
+  <h2 class="cta-title">Let's Build<br>Something.</h2>
+  <p class="cta-sub">Drop us a message and let's see what we can create together.</p>
+  <a href="mailto:hello@404kulture.com" class="btn-white">Start the Conversation →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo"><span>404</span> KULTURE</div>
+      <p class="footer-tagline">We don't follow culture. We make it. Based in Morocco, built for the world.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <ul class="footer-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#">Content Production</a></li>
+        <li><a href="#">Artist Management</a></li>
+        <li><a href="#">Brand Partnerships</a></li>
+        <li><a href="#">Events & Live</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Connect</div>
+      <ul class="footer-links">
+        <li><a href="https://www.instagram.com/404kulture" target="_blank">Instagram</a></li>
+        <li><a href="#">TikTok</a></li>
+        <li><a href="#">YouTube</a></li>
+        <li><a href="mailto:hello@404kulture.com">Email Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 404 Kulture. All rights reserved.</div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/404kulture" class="social-link" target="_blank">IG</a>
+      <a href="#" class="social-link">TT</a>
+      <a href="#" class="social-link">YT</a>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/212000000000" class="wa-float" target="_blank">💬</a>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const follower = document.getElementById('follower');
+  let mouseX = 0, mouseY = 0;
+  let followerX = 0, followerY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX - 6 + 'px';
+    cursor.style.top = mouseY - 6 + 'px';
+  });
+
+  function animateFollower() {
+    followerX += (mouseX - followerX) * 0.12;
+    followerY += (mouseY - followerY) * 0.12;
+    follower.style.left = followerX - 18 + 'px';
+    follower.style.top = followerY - 18 + 'px';
+    requestAnimationFrame(animateFollower);
+  }
+  animateFollower();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'scale(2)';
+      follower.style.transform = 'scale(1.5)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'scale(1)';
+      follower.style.transform = 'scale(1)';
+    });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav background on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) {
+      nav.style.background = 'rgba(8,8,8,0.97)';
+      nav.style.borderBottom = '1px solid #1a1a1a';
+    } else {
+      nav.style.background = 'linear-gradient(to bottom, rgba(8,8,8,0.95), transparent)';
+      nav.style.borderBottom = 'none';
+    }
+  });
+</script>
+</body>
+</html>
